@@ -8,11 +8,11 @@ This construct provides a straightforward way to retrieve and use AWS managed pr
 
 ## Example
 
-Here's an example of how to use the `AwsManagedPrefixList` construct in a CDK stack. For full example code, please refer to the [main.ts](./main.ts) file.
+Here's an example of how to use the `AwsManagedPrefixList` construct in a CDK stack. For full example code, please refer to the [main.ts](./src/main.ts) file.
 
 ## Construct Implementation
 
-The `AwsManagedPrefixList` construct is implemented to dynamically fetch and use AWS managed prefix lists in your CDK applications. The implementation uses `AwsCustomResource` to describe managed prefix lists and obtain their IDs, which can then be used in security groups or other constructs that accept prefix lists. You can find the implementation in the [aws-managed-prefix-list.ts](./util/aws-managed-prefix-list.ts) file.
+The `AwsManagedPrefixList` construct is implemented to dynamically fetch and use AWS managed prefix lists in your CDK applications. The implementation uses `AwsCustomResource` to describe managed prefix lists and obtain their IDs, which can then be used in security groups or other constructs that accept prefix lists. You can find the implementation in the [aws-managed-prefix-list.ts](./src/util/aws-managed-prefix-list.ts) file.
 
 ## Usage
 

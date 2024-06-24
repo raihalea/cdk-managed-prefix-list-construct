@@ -1,11 +1,40 @@
-import { App, Stack, StackProps } from 'aws-cdk-lib';
+import { App, Aws, Stack, StackProps } from 'aws-cdk-lib';
+import { Peer, Port, SecurityGroup, Vpc } from 'aws-cdk-lib/aws-ec2';
 import { Construct } from 'constructs';
+import { AwsManagedPrefixList } from './util/aws-managed-prefix-list';
 
 export class MyStack extends Stack {
   constructor(scope: Construct, id: string, props: StackProps = {}) {
     super(scope, id, props);
 
-    // define resources here...
+    const vpc = new Vpc(this, 'Vpc', {
+      natGateways: 0,
+    });
+
+    const sg = new SecurityGroup(this, 'SecurityGroup', {
+      vpc: vpc,
+    });
+
+    // Standard method
+    // sg.connections.allowFrom(Peer.prefixList('pl-02cd2c6b'), Port.HTTPS);
+
+    // S3 Managed Prefix List
+    const s3PrefixList = new AwsManagedPrefixList( this, 'S3PrefixList',
+      { name: `com.amazonaws.${Aws.REGION}.s3` },
+    ).prefixList;
+
+    sg.connections.allowFrom(Peer.prefixList(s3PrefixList.prefixListId), Port.HTTPS);
+
+    // CloudFront
+    const cloudfrontPrefixList = new AwsManagedPrefixList(
+      this,
+      'CloudfrontOriginPrefixList',
+      { name: 'com.amazonaws.global.cloudfront.origin-facing' },
+    ).prefixList;
+
+    sg.connections.allowFrom(Peer.prefixList(cloudfrontPrefixList.prefixListId), Port.HTTPS);
+
+
   }
 }
 

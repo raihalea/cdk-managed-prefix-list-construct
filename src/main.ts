@@ -18,14 +18,14 @@ export class MyStack extends Stack {
     // Standard method
     // sg.connections.allowFrom(Peer.prefixList('pl-02cd2c6b'), Port.HTTPS);
 
-    // S3 Managed Prefix List
+    // S3 AWS-managed prefix lists
     const s3PrefixList = new AwsManagedPrefixList( this, 'S3PrefixList',
       { name: `com.amazonaws.${Aws.REGION}.s3` },
     ).prefixList;
 
     sg.connections.allowFrom(Peer.prefixList(s3PrefixList.prefixListId), Port.HTTPS);
 
-    // CloudFront
+    // CloudFront AWS-managed prefix lists
     const cloudfrontPrefixList = new AwsManagedPrefixList(
       this,
       'CloudfrontOriginPrefixList',

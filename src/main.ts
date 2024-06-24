@@ -1,7 +1,7 @@
 import { App, Aws, Stack, StackProps } from 'aws-cdk-lib';
 import { Peer, Port, SecurityGroup, Vpc } from 'aws-cdk-lib/aws-ec2';
 import { Construct } from 'constructs';
-import { AwsManagedPrefixList } from './util/aws-managed-prefix-list';
+import { AwsManagedPrefixList } from './utils/aws-managed-prefix-list';
 
 export class MyStack extends Stack {
   constructor(scope: Construct, id: string, props: StackProps = {}) {
